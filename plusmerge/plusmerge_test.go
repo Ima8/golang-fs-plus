@@ -6,13 +6,13 @@ import (
 )
 
 func TestisExist(t *testing.T) {
-	assert.True(t, isExist(`/`))
-	assert.False(t, isExist(`testfailfailtest11111`))
+	assert.True(t, IsExist(`/`))
+	assert.False(t, IsExist(`testfailfailtest11111`))
 }
 
 func TestFolderCreateFolder(t *testing.T) {
 	var path = ""
-	assert.True(t, createFolder(path))
+	assert.True(t, CreateFolder(path))
 }
 
 func TestMoveFile(t *testing.T) {
@@ -20,6 +20,6 @@ func TestMoveFile(t *testing.T) {
 	var pathB = ""
 	var pathC = ""
 
-	assert.True(t, moveFile(pathA, pathC))
-	assert.True(t, moveFile(pathA, pathB, pathC))
+	assert.True(t, MoveFile(pathA, pathC))
+	assert.True(t, MoveFile(pathA, pathB, pathC))
 }
