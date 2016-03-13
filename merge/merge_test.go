@@ -1,4 +1,4 @@
-package golang_merge_folder
+package golang_fs_plus_merge
 
 import (
 	"github.com/stretchr/testify/assert"
