@@ -1,4 +1,4 @@
-package plusMerge
+package main
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -6,7 +6,7 @@ import (
 )
 
 func TestFileisExist(t *testing.T) {
-	var path = ""
+	var path = "F:/"
 	assert.True(t, isFileExist(path))
 }
 
