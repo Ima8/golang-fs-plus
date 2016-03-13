@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	plusmerge.IsExist(`/`)
+	plusmerge.CreateFolder(`max`)
 }

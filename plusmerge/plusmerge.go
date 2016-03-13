@@ -1,7 +1,7 @@
 package plusmerge
 
 import (
-	// "fmt"
+	"fmt"
 	"os"
 )
 
@@ -21,6 +21,14 @@ func IsExist(path string) bool {
 
 //CreateFolder is a public func for Create a new Folder
 func CreateFolder(path string) bool {
+	// path := "/folder/to/create"
+	err := os.MkdirAll(path, 0711)
+
+	if err != nil {
+		fmt.Println("Error creating directory")
+		fmt.Println(err)
+		return false
+	}
 	return true
 }
 

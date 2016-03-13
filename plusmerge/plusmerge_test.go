@@ -6,13 +6,14 @@ import (
 )
 
 func TestisExist(t *testing.T) {
-	assert.True(t, IsExist(`/`))
-	assert.False(t, IsExist(`testfailfailtest11111`))
+	assert.True(t, IsExist(`/`), "Test isExist path '/'")
+	assert.False(t, IsExist(`wgefwherw`), "Test isExist path 'wgefwherw'")
 }
 
 func TestFolderCreateFolder(t *testing.T) {
-	var path = ""
-	assert.True(t, CreateFolder(path))
+	var path = "./max"
+	assert.True(t, CreateFolder(path), "Test CreateFolder")
+	assert.True(t, IsExist(path), "Test isExist after CreateFolder")
 }
 
 func TestMoveFile(t *testing.T) {
