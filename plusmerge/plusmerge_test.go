@@ -20,8 +20,10 @@ func TestFolderCreateFolder(t *testing.T) {
 
 func TestGetChild(t *testing.T) {
 	var path = "tmp"
-	assert.True(t, IsExist(path), "Test isExist in TestGet	Child")
-	assert.NotEqual(t, GetChild(path), false, "Test GetChild after isExist")
+	TestisExist := assert.True(t, IsExist(path), "Test isExist in TestGet	Child")
+	if TestisExist {
+		assert.NotEmpty(t, GetChild(path), "Test GetChild is NotEmpty when Exist")
+	}
 }
 
 func TestMoveFile(t *testing.T) {

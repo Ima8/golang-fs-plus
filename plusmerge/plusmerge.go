@@ -54,7 +54,7 @@ func GetChild(path string) []string {
 
 	//fmt.Println(objects)
 	if len(objects) > 0 {
-		fmt.Println("hey")
+		fmt.Println("hey we have child")
 		for _, obj := range objects {
 			//sourcefilepointer := source + "/" + obj.Name()
 			result = append(result, obj.Name())
