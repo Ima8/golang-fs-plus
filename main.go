@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	plusmerge.GetChild(`./plusmerge/tmp`)
-
+	//plusmerge.GetChild(`./plusmerge/tmp`)
+	plusmerge.MoveFile("hhaha")
 }

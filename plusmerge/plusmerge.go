@@ -5,6 +5,12 @@ import (
 	"os"
 )
 
+//PathArgs is a type of Path
+type PathArgs struct {
+	PathSrc  []string
+	PathDesc string
+}
+
 //IsExist is a public func for check File or Folder is Exist
 func IsExist(path string) bool {
 	// path/to/whatever exists
@@ -39,9 +45,29 @@ func DeleteFolder(path string) bool {
 
 }
 
-//MoveFile is a public func for move mutil file
-func MoveFile(pathDest string, pathSrc ...string) bool {
-	return true
+/*
+MoveFile is a public func for move mutil file
+MoveFile(pathArgs {PathDesc:"/PathDesc"})
+MoveFile(PathArgs {PathSrc:[]string{"/pathA","/pathB"},PathDesc:"/pathDesc"})
+PathDesc string, pathSrc ...string
+*/
+//manager
+func MoveFile(args ...string) bool {
+	if len(args) > 2 { // 1 pathSrc 1 Desc
+		fmt.Println(args)
+	} else { // N pathSrc 1 Desc
+
+	}
+
+	return false
+}
+
+// worker
+func moveFile(args PathArgs) bool {
+	fmt.Println(args)
+	// file, err := os.Open()
+	// fi,err :=file.Stat()
+	return false
 }
 
 //GetChild is a public func to get child in directory
@@ -54,11 +80,11 @@ func GetChild(path string) []string {
 
 	//fmt.Println(objects)
 	if len(objects) > 0 {
-		fmt.Println("hey we have child")
+		//fmt.Println("hey we have child")
 		for _, obj := range objects {
 			//sourcefilepointer := source + "/" + obj.Name()
 			result = append(result, obj.Name())
-			fmt.Println(obj.Name())
+			//fmt.Println(obj.Name())
 		}
 	} else {
 		printError(err.Error())
