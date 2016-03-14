@@ -1,8 +1,9 @@
 package plusmerge
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestisExist(t *testing.T) {
@@ -14,6 +15,7 @@ func TestFolderCreateFolder(t *testing.T) {
 	var path = "./max"
 	assert.True(t, CreateFolder(path), "Test CreateFolder")
 	assert.True(t, IsExist(path), "Test isExist after CreateFolder")
+	assert.True(t, DeleteFolder(path), "Test Delete Folder after CreateFolder")
 }
 
 func TestMoveFile(t *testing.T) {

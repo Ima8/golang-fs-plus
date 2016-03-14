@@ -5,10 +5,6 @@ import (
 	"os"
 )
 
-func main() {
-	IsExist(`F:\DropboxData\Dropbox\golangBook`)
-}
-
 //IsExist is a public func for check File or Folder is Exist
 func IsExist(path string) bool {
 	// path/to/whatever exists
@@ -30,6 +26,17 @@ func CreateFolder(path string) bool {
 		return false
 	}
 	return true
+}
+
+//Delete Folder and sub
+func DeleteFolder(path string) bool {
+	err := os.RemoveAll(path)
+	if err != nil {
+		fmt.Println("Error can't Remove path: " + path)
+		return false
+	}
+	return true
+
 }
 
 //MoveFile is a public func for move mutil file
