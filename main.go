@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	plusmerge.CreateFolder(`max`)
+	plusmerge.GetChild(`./plusmerge/tmp`)
 
 }

@@ -28,7 +28,7 @@ func CreateFolder(path string) bool {
 	return true
 }
 
-//Delete Folder and sub
+//DeleteFolder and sub directory
 func DeleteFolder(path string) bool {
 	err := os.RemoveAll(path)
 	if err != nil {
@@ -44,8 +44,29 @@ func MoveFile(pathDest string, pathSrc ...string) bool {
 	return true
 }
 
-func getChild(path string) []string {
+//GetChild is a public func to get child in directory
+func GetChild(path string) []string {
 	result := []string{}
 
+	directory, _ := os.Open(path)
+
+	objects, err := directory.Readdir(-1)
+
+	//fmt.Println(objects)
+	if len(objects) > 0 {
+		fmt.Println("hey")
+		for _, obj := range objects {
+			//sourcefilepointer := source + "/" + obj.Name()
+			result = append(result, obj.Name())
+			fmt.Println(obj.Name())
+		}
+	} else {
+		printError(err.Error())
+	}
+	fmt.Println(result)
 	return result
+}
+
+func printError(s string) {
+	fmt.Println("ERROR :", s)
 }

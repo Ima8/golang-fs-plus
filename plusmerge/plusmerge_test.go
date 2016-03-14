@@ -18,6 +18,12 @@ func TestFolderCreateFolder(t *testing.T) {
 	assert.True(t, DeleteFolder(path), "Test Delete Folder after CreateFolder")
 }
 
+func TestGetChild(t *testing.T) {
+	var path = "tmp"
+	assert.True(t, IsExist(path), "Test isExist in TestGet	Child")
+	assert.NotEqual(t, GetChild(path), false, "Test GetChild after isExist")
+}
+
 func TestMoveFile(t *testing.T) {
 	var pathA = ""
 	var pathB = ""
