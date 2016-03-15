@@ -85,18 +85,34 @@ func MoveFile(args ...string) (result string) {
 // worker
 func moveFile(pathSrc *[]string, pathDec string) (msg string) {
 	q := NewQueue(len(*pathSrc))
-	q.Push(&Node{getValueSlice(*pathSrc, 0)})
+	// q.Push(&Node{getValueSlice(*pathSrc, 0)})
+	for _, data := range *pathSrc {
+		q.Push(&Node{data})
+	}
+	for {
+		if q.count != 0 {
+			v := q.Pop()
+			//fmt.Println(q.count)
+			fmt.Println(v.Value)
+			child := GetChild(v.Value)
+			for _, data := range child {
+				q.Push(&Node{data})
+			}
+		} else {
+			break
+		}
 
+	}
 	return ""
 }
 
 //GetChild is a public func to get child in directory
 func GetChild(path string) []string {
-	result := []string{}
+	var result = make([]string, 0)
 
 	directory, _ := os.Open(path)
 
-	objects, err := directory.Readdir(-1)
+	objects, _ := directory.Readdir(-1)
 
 	//fmt.Println(objects)
 	if len(objects) > 0 {
@@ -107,9 +123,9 @@ func GetChild(path string) []string {
 			//fmt.Println(obj.Name())
 		}
 	} else {
-		initError(err.Error())
+		//initError(err.Error())
 	}
-	fmt.Println(result)
+	//fmt.Println(result)
 	return result
 }
 
