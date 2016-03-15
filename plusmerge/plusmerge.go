@@ -85,24 +85,40 @@ func MoveFile(args ...string) (result string) {
 // worker
 func moveFile(pathSrc *[]string, pathDec string) (msg string) {
 	q := NewQueue(len(*pathSrc))
+	fullPath := NewQueue(len(*pathSrc) * 2)
 	// q.Push(&Node{getValueSlice(*pathSrc, 0)})
+
+	//Scen all of directory
 	for _, data := range *pathSrc {
+		var fPath string
 		q.Push(&Node{data})
-	}
-	for {
-		if q.count != 0 {
-			v := q.Pop()
-			//fmt.Println(q.count)
-			fmt.Println(v.Value)
-			child := GetChild(v.Value)
-			for _, data := range child {
-				q.Push(&Node{data})
+		for {
+			if q.count != 0 {
+				v := q.Pop()
+				fPath = fPath + v.Value + "/"
+				fullPath.Push(&Node{fPath})
+				//fmt.Println(fullPath.Pop())
+				child := GetChild(v.Value)
+				for _, data := range child {
+					q.Push(&Node{data})
+				}
+			} else {
+				break
 			}
+		}
+	}
+
+	count := 0
+	for {
+		if fullPath.count != 0 {
+			fmt.Println(fullPath.Pop())
+			fmt.Println(count)
+			count++
 		} else {
 			break
 		}
-
 	}
+
 	return ""
 }
 
