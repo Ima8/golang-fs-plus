@@ -1,9 +1,8 @@
 package plusmerge
 
 import (
-	"testing"
-
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestisExist(t *testing.T) {
@@ -31,6 +30,8 @@ func TestMoveFile(t *testing.T) {
 	var pathB = ""
 	var pathC = ""
 
-	assert.True(t, MoveFile(pathA, pathC))
-	assert.True(t, MoveFile(pathA, pathB, pathC))
+	assert.NotEqual(t, MoveFile(pathA, pathC), "FAIL")
+	assert.NotEqual(t, MoveFile(pathA, pathB, pathC), "FAIL")
+	assert.NotEqual(t, MoveFile(pathA, pathB, pathC, "barbarbaer"), "FAIL")
+	assert.Equal(t, MoveFile(pathA), "FAIL")
 }

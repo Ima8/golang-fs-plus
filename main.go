@@ -2,9 +2,10 @@ package main
 
 import (
 	"./plusmerge"
+	"fmt"
 )
 
 func main() {
 	//plusmerge.GetChild(`./plusmerge/tmp`)
-	plusmerge.MoveFile("hhaha")
+	fmt.Println(plusmerge.MoveFile("./plusmerge/tmp/dir1", "./plusmerge/tmp/dir22"))
 }

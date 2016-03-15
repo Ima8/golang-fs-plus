@@ -49,25 +49,43 @@ func DeleteFolder(path string) bool {
 MoveFile is a public func for move mutil file
 MoveFile(pathArgs {PathDesc:"/PathDesc"})
 MoveFile(PathArgs {PathSrc:[]string{"/pathA","/pathB"},PathDesc:"/pathDesc"})
+MoveFile("/pathA","/pathDesc"})
+MoveFile("/pathA","/pathB","/pathDesc"})
 PathDesc string, pathSrc ...string
 */
 //manager
-func MoveFile(args ...string) bool {
-	if len(args) > 2 { // 1 pathSrc 1 Desc
-		fmt.Println(args)
-	} else { // N pathSrc 1 Desc
-
+func MoveFile(args ...string) (result string) {
+	lenOfargs := len(args)
+	if lenOfargs >= 2 { // 1 pathSrc has 1 Desc
+		fmt.Println()
+		paths := new(PathArgs)
+		paths.PathSrc = args[0 : lenOfargs-1]
+		paths.PathDesc = args[lenOfargs-1]
+		// check path are Vaild
+		for i := range paths.PathSrc {
+			pathName := paths.PathSrc[i]
+			if !IsExist(pathName) {
+				return initError(pathName + " not found")
+			}
+		}
+		pathDecs := paths.PathDesc
+		if !IsExist(pathDecs) { // Desc not found
+			if !CreateFolder(pathDecs) {
+				return initError(pathDecs + " can't make folder or path invaild")
+			}
+		}
+	} else {
+		result = initError("Args not match in format")
 	}
-
-	return false
+	return result
 }
 
 // worker
-func moveFile(args PathArgs) bool {
-	fmt.Println(args)
+func moveFile(pathSrc string, pathDec string) (msg string) {
+
 	// file, err := os.Open()
 	// fi,err :=file.Stat()
-	return false
+	return ""
 }
 
 //GetChild is a public func to get child in directory
@@ -87,12 +105,14 @@ func GetChild(path string) []string {
 			//fmt.Println(obj.Name())
 		}
 	} else {
-		printError(err.Error())
+		initError(err.Error())
 	}
 	fmt.Println(result)
 	return result
 }
 
-func printError(s string) {
-	fmt.Println("ERROR :", s)
+func initError(s string) string {
+	msg := "ERROR : " + s
+	//fmt.Println(msg)
+	return msg
 }
