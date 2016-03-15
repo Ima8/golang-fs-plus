@@ -1,8 +1,13 @@
 package plusmerge
 
 import (
-	"fmt"
+//"fmt"
 )
+
+//Node for store something like path
+type Node struct {
+	Value string
+}
 
 // NewQueue returns a new queue with the given initial size.
 func NewQueue(size int) *Queue {
@@ -48,15 +53,15 @@ func (q *Queue) Pop() *Node {
 }
 
 func main() {
-	s := NewStack()
-	s.Push(&Node{1})
-	s.Push(&Node{2})
-	s.Push(&Node{3})
-	fmt.Println(s.Pop(), s.Pop(), s.Pop())
-
-	q := NewQueue(1)
-	q.Push(&Node{4})
-	q.Push(&Node{5})
-	q.Push(&Node{6})
-	fmt.Println(q.Pop(), q.Pop(), q.Pop())
+	// s := NewStack()
+	// s.Push(&Node{1})
+	// s.Push(&Node{2})
+	// s.Push(&Node{3})
+	// fmt.Println(s.Pop(), s.Pop(), s.Pop())
+	//
+	// q := NewQueue(1)
+	// q.Push(&Node{4})
+	// q.Push(&Node{5})
+	// q.Push(&Node{6})
+	// fmt.Println(q.Pop(), q.Pop(), q.Pop())
 }

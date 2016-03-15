@@ -84,12 +84,9 @@ func MoveFile(args ...string) (result string) {
 
 // worker
 func moveFile(pathSrc *[]string, pathDec string) (msg string) {
+	q := NewQueue(len(*pathSrc))
+	q.Push(&Node{getValueSlice(*pathSrc, 0)})
 
-	q := NewQueue(1)
-	fmt.Println(q)
-
-	// file, err := os.Open()
-	// fi,err :=file.Stat()
 	return ""
 }
 
@@ -120,4 +117,13 @@ func initError(s string) string {
 	msg := "ERROR : " + s
 	//fmt.Println(msg)
 	return msg
+}
+
+func getValueSlice(datas []string, index int) string {
+	for i := range datas {
+		if i == index {
+			return datas[i]
+		}
+	}
+	return ""
 }

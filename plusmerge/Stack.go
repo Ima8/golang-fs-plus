@@ -4,10 +4,6 @@ import (
 	"fmt"
 )
 
-type Node struct {
-	Value int
-}
-
 func (n *Node) String() string {
 	return fmt.Sprint(n.Value)
 }
