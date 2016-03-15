@@ -85,6 +85,9 @@ func MoveFile(args ...string) (result string) {
 // worker
 func moveFile(pathSrc *[]string, pathDec string) (msg string) {
 
+	q := NewQueue(1)
+	fmt.Println(q)
+
 	// file, err := os.Open()
 	// fi,err :=file.Stat()
 	return ""
