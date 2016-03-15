@@ -83,6 +83,7 @@ func MoveFile(args ...string) (result string) {
 }
 
 // worker
+// change to Tree stu
 func moveFile(pathSrc *[]string, pathDec string) (msg string) {
 	q := NewQueue(len(*pathSrc))
 	fullPath := NewQueue(len(*pathSrc) * 2)
@@ -93,12 +94,14 @@ func moveFile(pathSrc *[]string, pathDec string) (msg string) {
 		var fPath string
 		q.Push(&Node{data})
 		for {
+			fPath = ""
 			if q.count != 0 {
 				v := q.Pop()
 				fPath = fPath + v.Value + "/"
 				fullPath.Push(&Node{fPath})
 				//fmt.Println(fullPath.Pop())
 				child := GetChild(v.Value)
+				fmt.Println(child)
 				for _, data := range child {
 					q.Push(&Node{data})
 				}
