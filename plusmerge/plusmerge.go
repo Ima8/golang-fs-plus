@@ -108,6 +108,7 @@ func moveFile(pathSrc *[]string, pathDec string) (msg string) {
 		}
 	}
 
+	// just for test now
 	count := 0
 	for {
 		if fullPath.count != 0 {
