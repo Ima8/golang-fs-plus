@@ -33,5 +33,5 @@ func TestMoveFile(t *testing.T) {
 	assert.NotEqual(t, MoveFile(pathA, pathC), "FAIL")
 	assert.NotEqual(t, MoveFile(pathA, pathB, pathC), "FAIL")
 	assert.NotEqual(t, MoveFile(pathA, pathB, pathC, "barbarbaer"), "FAIL")
-	assert.Equal(t, MoveFile(pathA), "FAIL")
+	assert.Equal(t, MoveFile(pathA), "ERROR : Args not match in format")
 }

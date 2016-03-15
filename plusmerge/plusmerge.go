@@ -119,7 +119,7 @@ func moveFile(pathSrc *[]string, pathDec string) (msg string) {
 		}
 	}
 
-	return ""
+	return "TRUE"
 }
 
 //GetChild is a public func to get child in directory
