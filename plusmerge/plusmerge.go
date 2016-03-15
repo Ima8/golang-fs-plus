@@ -74,6 +74,8 @@ func MoveFile(args ...string) (result string) {
 				return initError(pathDecs + " can't make folder or path invaild")
 			}
 		}
+
+		moveFile(&paths.PathSrc, pathDecs)
 	} else {
 		result = initError("Args not match in format")
 	}
@@ -81,7 +83,7 @@ func MoveFile(args ...string) (result string) {
 }
 
 // worker
-func moveFile(pathSrc string, pathDec string) (msg string) {
+func moveFile(pathSrc *[]string, pathDec string) (msg string) {
 
 	// file, err := os.Open()
 	// fi,err :=file.Stat()
