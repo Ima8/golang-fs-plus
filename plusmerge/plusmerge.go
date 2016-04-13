@@ -2,7 +2,10 @@ package plusmerge
 
 import (
 	"fmt"
+	"hash/fnv"
 	"os"
+
+	"github.com/RincLiu/Go-Algorithm/data-structures/stack"
 )
 
 //PathArgs is a type of Path
@@ -64,7 +67,9 @@ func MoveFile(args ...string) (result string) {
 		// check path are Vaild
 		for i := range paths.PathSrc {
 			pathName := paths.PathSrc[i]
+			//fmt.Println(pathName)
 			if !IsExist(pathName) {
+				//fmt.Println(pathName)
 				return initError(pathName + " not found")
 			}
 		}
@@ -84,46 +89,63 @@ func MoveFile(args ...string) (result string) {
 
 // worker
 // change to Tree stu
+// func moveFile(pathSrc *[]string, pathDec string) (msg string) {
+// 	q := NewQueue(len(*pathSrc))
+// 	fullPath := NewQueue(len(*pathSrc) * 2)
+// 	// q.Push(&Node{getValueSlice(*pathSrc, 0)})
+//
+// 	//Scen all of directory
+// 	for _, data := range *pathSrc {
+// 		var fPath string
+// 		q.Push(&Node{data})
+// 		for {
+// 			fPath = ""
+// 			if q.count != 0 {
+// 				v := q.Pop()
+// 				fPath = fPath + v.Value + "/"
+// 				fullPath.Push(&Node{fPath})
+// 				//fmt.Println(fullPath.Pop())
+// 				child := GetChild(v.Value)
+// 				fmt.Println(child)
+// 				for _, data := range child {
+// 					q.Push(&Node{data})
+// 				}
+// 			} else {
+// 				break
+// 			}
+// 		}
+// 	}
+//
+// 	// just for test now
+// 	count := 0
+// 	for {
+// 		if fullPath.count != 0 {
+// 			fmt.Println(fullPath.Pop())
+// 			fmt.Println(count)
+// 			count++
+// 		} else {
+// 			break
+// 		}
+// 	}
+//
+// 	return "TRUE"
+// }
 func moveFile(pathSrc *[]string, pathDec string) (msg string) {
-	q := NewQueue(len(*pathSrc))
-	fullPath := NewQueue(len(*pathSrc) * 2)
-	// q.Push(&Node{getValueSlice(*pathSrc, 0)})
-
+	e := new(entry)
+	e.key = "/home"
+	fmt.Print(e)
 	//Scen all of directory
 	for _, data := range *pathSrc {
-		var fPath string
-		q.Push(&Node{data})
-		for {
-			fPath = ""
-			if q.count != 0 {
-				v := q.Pop()
-				fPath = fPath + v.Value + "/"
-				fullPath.Push(&Node{fPath})
-				//fmt.Println(fullPath.Pop())
-				child := GetChild(v.Value)
-				fmt.Println(child)
-				for _, data := range child {
-					q.Push(&Node{data})
-				}
-			} else {
-				break
-			}
-		}
+		//var fPath string
+		//q.Push(&Node{data})
+		fmt.Println(data)
 	}
+	return "FAIL"
+}
 
-	// just for test now
-	count := 0
-	for {
-		if fullPath.count != 0 {
-			fmt.Println(fullPath.Pop())
-			fmt.Println(count)
-			count++
-		} else {
-			break
-		}
-	}
-
-	return "TRUE"
+func Visit(path string, f os.FileInfo, err error) error {
+	fmt.Printf("Visited: %s\n", path)
+	return nil
 }
 
 //GetChild is a public func to get child in directory
@@ -162,4 +184,104 @@ func getValueSlice(datas []string, index int) string {
 		}
 	}
 	return ""
+}
+
+//LinkedHashMap
+
+const TABLE_SIZE = 128
+
+type entry struct {
+	key  string
+	next *entry
+}
+
+type LinkedHashMap struct {
+	table []*entry
+}
+
+func (hashMap *LinkedHashMap) Put(key string) {
+	hashMap.checkTable()
+	hash := getHashValue(key)
+	e := hashMap.table[hash]
+	if e == nil {
+		hashMap.table[hash] = &entry{key, nil}
+	} else {
+		for e.next != nil {
+			if e.key == key {
+				return
+			}
+			e = e.next
+		}
+		if e.key == key {
+		} else {
+			e.next = &entry{key, nil}
+		}
+	}
+}
+
+func (hashMap *LinkedHashMap) Remove(key string) {
+	hashMap.checkTable()
+	hash := getHashValue(key)
+	e := hashMap.table[hash]
+	if e != nil {
+		for e.next != nil {
+			if e.key == key {
+				e.key = e.next.key
+				e.next = e.next.next
+				return
+			}
+			e = e.next
+		}
+		if e.key == key {
+			e = nil
+		}
+	}
+}
+
+func (hashMap *LinkedHashMap) Clear() {
+	hashMap.checkTable()
+	for _, e := range hashMap.table {
+		if e != nil {
+			stack := &stack.LinkedStack{}
+			stack.Push(e)
+			nextEntry := e.next
+			for nextEntry != nil {
+				stack.Push(nextEntry)
+				nextEntry = nextEntry.next
+			}
+			for stack.Size() > 0 {
+				e := convertToEntry(stack.Peek())
+				e.key = ""
+				e.next = nil
+				e = nil
+				stack.Pop()
+			}
+		}
+	}
+}
+
+func getHashValue(key string) uint32 {
+	return hashCode(key) % TABLE_SIZE
+}
+
+func hashCode(s string) uint32 {
+	h := fnv.New32a()
+	h.Write([]byte(s))
+	return h.Sum32()
+}
+func convertToEntry(x interface{}) *entry {
+	if v, ok := x.(*entry); ok {
+		return v
+	} else {
+		panic("Entry convertion exception.")
+	}
+}
+
+func (hashMap *LinkedHashMap) checkTable() {
+	if hashMap.table == nil {
+		hashMap.table = []*entry{}
+		for i := 0; i < TABLE_SIZE; i++ {
+			hashMap.table = append(hashMap.table, nil)
+		}
+	}
 }
